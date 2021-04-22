@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="Description" content="CSCE-221">
+<meta name="Keywords" content="CSCE 221, Data Structures and Algorithms, Computer Science, Texas A&M University">
+<link rel="icon" href="../../images/Z.png">
+<!-- link rel="stylesheet" href="../../css/latex.css" -->
+<title>CSCE-221: Data Structures and Algorithms</title>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="../../css/bootstrap.css">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+  <div class="container">
+	<a href="./">
+    <h1><center>Fall 2019 CSCE-221 Data Structures and Algorithms</center></h1>
+	<h1><center>Lab Sections 501 - 504</center></h1>
+	</a>
+	<hr>
+    <h2>Course Information</h2>
+    <hr>
+    <p>All the course materials are on <b><a href="https://ecampus.tamu.edu/">eCampus</a></b>. Please refer to eCampus for all lectures, announcements and submissions.</p>
+	<div class="row">
+		<div class="col-sm-4">
+			<h4><u>Lectures</u></h4>
+			<p>501-504: TR 11:10 AM - 12:25 PM, ZACH 310</p>
+		</div>
+		<div class="col-sm-4 borderless">
+			<h4><u>Labs</u></h4>
+			<p>501: Thur 08:25 - 09:15 AM, ZACH 584</p>
+			<p>502: Thur 09:35 - 10:25 AM, ZACH 584</p>
+			<p>503: Thur 02:35 - 03:25 PM, ZACH 596</p>
+			<p>504: Thur 03:55 - 04:45 PM, ZACH 596</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<h4><u>Instructor</u></h4>
+			<p><a href="https://engineering.tamu.edu/cse/profiles/lupoli-shawn.html"><b>Prof. Shawn Lupoli</b></a></p>
+			<p>Office: Check Syllabus on <b><a href="https://ecampus.tamu.edu/">eCampus</a></b></p>
+			<p>Email: <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;%73%6C%75%70%6F%6C%69%40%63%73%65%2E%74%61%6D%75%2E%65%64%75">slupoli&commat;cse.tamu.edu</a></p>
+		</div>
+		<div class="col-sm-4">
+			<h4><u>Teaching Assistant</u></h4>
+			<p><a href="../.."><b>Zhipei Yan</b></a></p>
+			<p>Office hours: MF 2:00 PM - 5:00 PM,  <a href="http://aggiemap.tamu.edu/?bldg=0458">EABC</a> 118C (across from The Commons)</p>
+			<p>Email: <img src="../../images/email.png" alt="email address" height="15"></p>
+		</div>
+		<div class="col-sm-4">
+			<h4><a href="https://engineering.tamu.edu/cse/academics/peer-teachers/current-peer-teachers.html"><u>Peer Teachers</u></a></h4>
+			<p>501: Kyle Coffey, David Mize</p>
+			<p>502: Branden Klar, Luis Pantin</p>
+			<p>503: Scott Wilkins</p>
+			<p>504: David Mize, Branden Klar</p>
+			<!-- <p>HRBB 129</p>
+			<table class="table">
+				<tbody>
+				  <tr>
+					<td>Luis Pantin</td>
+					<td>Tue 1:00 - 2:00 pm<br />Thu 2:30 - 3:30 pm</td>
+				  </tr>
+				  <tr>
+					<td>Scott Wilkins</td>
+					<td>Mon 4:00 - 5:00 pm<br />Wed 5:00 - 6:00 pm<br />Sun 2:00 - 3:00 pm</td>
+				  </tr>
+				  <tr>
+					<td>David Mize</td>
+					<td>4:30 - 5:30 pm</td>
+				  </tr>
+				</tbody>
+			</table> -->
+		</div>
+	</div>
+	<hr>
+	<h2>Announcements</h2>
+	<ul>
+		<li class="text-danger"><b>12/9/2019: All labs have been graded. If you have any questions about your lab grades, please send me an email by the end of 12/10/2019.</b></li>
+		<li>10/3/2019: You will need a linux environment for Lab7 Valgrind. Try to get a local linux environment or use the remote server.</li>
+		<li>9/30/2019: If you submitted the in-class quiz for Lab 5 midterm review, you will get full marks for this lab. The correctness of your answers will not affect your grades.</li>
+		<li>9/30/2019: TA does NOT grade/regrade the projects. TA may answer your questions about the projects. But if you have any concern about the grades, please contact the professor.</li>
+		<li>9/06/2019: Now the feedback of Lab 1 should be visible to you. Check ecampus and tell me if you can't see your grades/feedback.</li>
+		<li>9/05/2019: The folder of Lab 2 has been set to close earlier than the exercise by mistake. Now the submission link is back. Please check ecampus.</li>
+		<li>9/02/2019: Lab1 has been graded. Please check eCampus.</li>
+		<li>9/02/2019: Instructions to access Linux shells and command-line tools on Windows have been added. Please get familiar with the coding environments before the following labs.</li>
+		<li>8/29/2019: Lab 1 extended to midnight.</li>
+	</ul>
+	<hr>
+	<h2>Lab Section Requirements</h2>
+	<p>Each lab assignment consists of two parts: the exercise submitted to eCampus, and the survey link (in the same folder of the exercise on eCampus). The two parts are weighted equally in grading, i.e. 50% for each. So dont' forget to do the <b>survey</b>!</p>
+	<h4>Compile your code</h4>
+	<ol>
+		<li>Make a folder for each of your exercise</li>
+		<li>Put everything in the folder</li>
+		<li>Write a Makefile for your code</li>
+		<li>Use make or manually use g++ to compile your code</li>
+		<li>Run your code: ./filename</li>
+	</ol>
+	<h4>Submission</h4>
+	<ol>
+		<li>Make sure your code compiles without errors</li>
+		<li>Clean all binary files before submission</li>
+		<li>Store your files (holding the directory structures) in a folder named <b>LabX_UIN_FirstName_LastName/</b> and compress the folder as <b>LabX_UIN_FirstName_LastName.zip</b> where "<b>X</b>" is lab exercise number. An example is Lab1_999999999_John_Smith.zip</li>
+		<li>Submit your zip file to the according lab assignment on eCampus</li>
+		<li>Finish the survey on eCampus</li>
+	</ol>
+	<hr>
+    <h2>Get Started</h2>
+	<h4><a href="csserver.html">Access the linux server of Computer Science Department</a></h4>
+	<h4><a href="linux.html">Linux command line and some tools</a></h4>
+	<h4><a href="putty.html">How to use PuTTY</a></h4>
+	<h4><a href="wsl.html">How to install Linux on Windows 10</a></h4>
+	<h4><a href="latex.html">Use LaTeX in your report</a></h4>
+	<hr>
+	<h2>Lab Schedule</h2>
+	<table class="table table-striped">
+		<thead>
+		  <tr>
+			<th class="col-sm-1">Date</th>
+			<th class="col-sm-1">Week</th>
+			<th class="col-sm-5">Topic</th>
+			<th class="col-sm-4">Notes</th>
+			<th class="col-sm-1">Graded</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <tr>
+			<td>8/29/2019</td>
+			<td>Lab1</td>
+			<td><a href="http://faculty.cse.tamu.edu/slupoli/notes/DataStructures/labs/Makefiles%20-%20Part%201/Makefile1.pptx">Makefile - Part 1</a></td>
+			<td><a href="notes/Makefile.html">Makefile</a>, <a href="https://parasol.tamu.edu/people/amato/Courses/221/Labs/Resources/makefile.php">Parasol</a></td>
+			<td>&#10003;</td>
+		  </tr>
+		  <tr>
+			<td>9/05/2019</td>
+			<td>Lab2</td>
+			<td><a href="http://faculty.cse.tamu.edu/slupoli/notes/DataStructures/supplements/codingStandards/C++%20Coding%20Standards,%20CSCE%20221%20Spring%202019.html">Coding Standards</a></td>
+			<td></td>
+			<td>&#10003;</td>
+		  </tr>
+		  <tr>
+			<td>9/12/2019</td>
+			<td>Lab3</td>
+			<td><a href="notes/asy_analyloops.pptx">Asymptotic Analysis of Code</a></td>
+			<td><a href="https://en.wikipedia.org/wiki/Time_complexity">Algorithm Complexity</a></td>
+			<td>&#10003;</td>
+		  </tr>
+		  <tr>
+			<td>9/19/2019</td>
+			<td>Lab4</td>
+			<td><a href="notes/measuring_time.pptx">Measuring Time</a></td>
+			<td><a href="notes/lab4time.cpp">Example</a>, <a href="http://faculty.cs.tamu.edu/schaefer/teaching/221_Fall2018/Assignments/StopWatchTest.zip">WindowsStopWatch (Dr. Schaefer)</a></td>
+			<td>&#10003;</td>
+		  </tr>
+		  <tr>
+			<td>9/26/2019</td>
+			<td>Lab5</td>
+			<td><a href="http://faculty.cse.tamu.edu/slupoli/notes/DataStructures/exam_info/Lupoli%20CMSC%20341%20Exam%201%20Study%20Guide.docx">Midterm Review</a></td>
+			<td></td>
+			<td>&#10003;</td>
+		  </tr>
+		  <tr>
+			<td>10/3/2019</td>
+			<td>Lab6</td>
+			<td><a href="http://faculty.cse.tamu.edu/slupoli/notes/DataStructures/labs/Sorting/Sorting_lab6.pptx">Sorting</a></td>
+			<td><a href="http://faculty.cs.tamu.edu/schaefer/teaching/221_Fall2018/Lectures/Sorting.ppt">Sorting and Selection (Dr. Schaefer)</a></td>
+			<td>&#10003;</td>
+		  </tr>
+		  <tr>
+			<td>10/10/2019</td>
+			<td>Lab7</td>
+			<td><a href="notes/valgrind.pptx">Valgrind</a></td>
+			<td><a href="http://faculty.cse.tamu.edu/slupoli/notes/DataStructures/labs/Valgrind/fixMem.cpp">fixMem.cpp</a></td>
+			<td>&#10003;</td>
+		  </tr>
+		  <tr>
+			<td>10/17/2019</td>
+			<td>Lab8</td>
+			<td><a href="notes/selection_lab8.ppt">Quickselect</a></td>
+			<td><a href="notes/QuickSelectSortLABA.docx">Exercise</a>, <a href="http://faculty.cs.tamu.edu/schaefer/teaching/221_Fall2018/Lectures/Sorting.ppt">Sorting and Selection (Dr. Schaefer)</a></td>
+			<td>&#10003;</td>
+		  </tr>
+		  <tr>
+			<td>10/24/2019</td>
+			<td>Lab9</td>
+			<td><a href="http://faculty.cse.tamu.edu/slupoli/notes/DataStructures/labs/Makefiles%20-%20Part%202/advanced_makefile.pptx">Makefile2</a></td>
+			<td><a href="notes/Makefile2">Example</a></td>
+			<td>&#10003;</td>
+		  </tr>
+		  <tr">
+			<td>10/31/2019</td>
+			<td>Lab10</td>
+			<td>Exam 2 Review</td>
+			<td></td>
+			<td>&#10003;</td>
+		  </tr>
+		  <tr>
+			<td>11/7/2019</td>
+			<td>Lab11</td>
+			<td><a href="http://faculty.cse.tamu.edu/slupoli/notes/DataStructures/labs/2-3Trees/2_3Trees.pptx">2-3 Tree</a></td>
+			<td><a href="http://faculty.cs.tamu.edu/chen/courses/629/2019F/notes/trees.pdf">2-3Trees (Dr. Jianer Chen)</a></td>
+			<td>&#10003;</td>
+		  </tr>
+		  <tr>
+			<td>11/14/2019</td>
+			<td>Lab12</td>
+			<td><a href="notes/hashing_strings.pptx">Hashing</a></td>
+			<td><a href="notes/Lab12_UIN_First_Last.docx">Exercise</a></td>
+			<td>&#10003;</td>
+		  </tr>
+		  <tr>
+			<td>11/21/2019</td>
+			<td>Lab13</td>
+			<td>Topological Sorting</td>
+			<td><a href="notes/Lab13_UIN_First_Last.docx">Exercise</a></td>
+			<td>&#10003;</td>
+		  </tr>
+		  <tr>
+			<td>12/3/2019</td>
+			<td>Lab14</td>
+			<td><a href="http://faculty.cse.tamu.edu/slupoli/notes/DataStructures/labs/Max-Flow/max_flow_lab.pdf">Maximum Flow</a></td>
+			<td><a href="notes/Lab14Eg.pptx">Example</a>, <a href="notes/Lab14_UIN_First_Last.docx">Exercise</a></td>
+			<td>&#10003;</td>
+		  </tr>
+		</tbody>
+	</table>
+    <hr>
+    <h2>Resources</h2>
+    <hr>
+	<p>Goodrich, M.T., Tamassia, R. and Mount, D.M., 2011. <i>Data structures and algorithms in C++</i>. John Wiley & Sons.</p>
+	<p><a href="https://wiki.cse.tamu.edu/index.php/Main_Page">https://wiki.cse.tamu.edu/index.php/Main_Page</a></p>
+  </div>
+<hr>
+<footer class="text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <p>Copyright © Zhipei Yan. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script src="js/jquery-1.11.3.min.js"></script> 
+<!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="js/bootstrap.js"></script>
+</body>
+</html>

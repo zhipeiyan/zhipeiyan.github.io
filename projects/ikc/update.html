@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="favicon.ico">
+
+  <title>Improved kappa-Curve</title>
+  <script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	  MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});
+	</script>
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+  </script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="narrow-jumbotron.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="container">
+    <header class="header clearfix">
+      <nav>
+        <ul class="nav nav-pills float-right">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="proposal.html">Proposal</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="update.html">Update
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="final.html">Final</a>
+          </li>
+        </ul>
+      </nav>
+      <h3 class="text-muted">Improved $\kappa$-Curve</h3>
+    </header>
+
+    <main role="main">
+
+      <div class="row marketing">
+        <div>
+          <h2>Summary</h2>
+          <p>Read the paper. The shape difference operator is decided by the map between the two manifolds, the inner product
+            spaces on the two manifolds. And the shape difference operator can be written as a matrix if we can find a basis
+            of the inner product space.</p>
+
+          <h2>Analysis</h2>
+          <p>The theory of my project is clear. The most difficult part is to compute the basis of the inner product space and
+            compute the difference matrix under some typical basis. I'm working on the implementing part of the method. After
+            that, I can apply the shape difference analysis on k-Curve. The implementing of k-Curve is done.</p>
+
+          <h2>Plan for completion</h2>
+          <p>Continue on the implementing of functional map and shape difference operator. Then apply it on k-Curve. If the
+            result is not good, I need to slightly modify the method to apply on the weight of rational polynomial curve.</p>
+        </div>
+        <div>
+          <h2>References</h2>
+          <p id="kappa">[1]
+            <a href="http://faculty.cs.tamu.edu/schaefer/research/kcurves.pdf">Yan, Z., Schiller, S., Wilensky, G., Carr, N. and Schaefer, S., 2017. k-curves: interpolation at local maximum
+              curvature. ACM Transactions on Graphics (TOG), 36(4), p.129.</a>
+          </p>
+          <p id="fmap">[2]
+            <a href="https://dl.acm.org/citation.cfm?id=2185526">Ovsjanikov, M., Ben-Chen, M., Solomon, J., Butscher, A. and Guibas, L., 2012. Functional maps: a flexible representation
+              of maps between shapes. ACM Transactions on Graphics (TOG), 31(4), p.30.</a>
+          </p>
+          <p id="shaped">[3]
+            <a href="https://dl.acm.org/citation.cfm?id=2461959">Rustamov, R.M., Ovsjanikov, M., Azencot, O., Ben-Chen, M., Chazal, F. and Guibas, L., 2013. Map-based exploration
+              of intrinsic shape differences and variability. ACM Transactions on Graphics (TOG), 32(4), p.72.</a>
+          </p>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="footer">
+      <p>&copy; Company 2017</p>
+    </footer>
+
+  </div>
+  <!-- /container -->
+</body>
+
+</html>

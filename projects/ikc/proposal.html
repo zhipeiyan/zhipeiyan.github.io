@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="favicon.ico">
+
+  <title>Improved kappa-Curve</title>
+  <script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	  MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});
+	</script>
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+  </script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="narrow-jumbotron.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="container">
+    <header class="header clearfix">
+      <nav>
+        <ul class="nav nav-pills float-right">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="proposal.html">Proposal
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="update.html">Update</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="final.html">Final</a>
+          </li>
+        </ul>
+      </nav>
+      <h3 class="text-muted">Improved $\kappa$-Curve</h3>
+    </header>
+
+    <main role="main">
+
+      <div class="row marketing">
+        <div>
+          <h2>1 Description</h2>
+          <p>For a given set of planar points, I want to generate an interplatory curve going through these points. Because
+            human sightseeing are more sensitive to maxima and minima curvature of a curve, we require the control to be
+            local maximum curvature, (in the meaning of absolute value), so that user can use the interpolated points as
+            control points to manipulate the curve. Also, when the control points are lying on a circle, we want the generated
+            curve to be exact the circle.</p>
+
+          <h2>2 Importance</h2>
+          <p>Approximation curves such as Catmull-Rom splines, cubic Bezier curves are widely used in curve modelling. However
+            the approximation splines used as curve editing tools in art design, especially the "Pen tool" in image editing
+            softwares, require lots of skills and experiences for users. Beginners need to struggle to learn to use the off-curve
+            points to control the curve. So interplatory curves are very suitable for intuitively control curve shapes.</p>
+          <p>Circular shapes together with elliptical shapes are very common in our daily life. So a powerful curve editing
+            tool should have the ability to reproduce circles when it's possible.</p>
+
+          <h2>3 Previous work</h2>
+          <p>Kappa curve [<a href="#kappa">1</a>] provide a scheme to generate a piece-wise quadratic interplatory curve having all input points as local
+            maximum curvature points. Also the curve is $G^2$ continuous except for several inflection points.</p>
+          <p>Functional Maps [<a href="#fmap">2</a>] indicated that if we have two manifold $M$ and $N$, and a bijection between them \[T:M\to N\] then this
+            bijection maps induce a bijection between real functions $\mathcal{F}(M,\mathbb{R})$ on $M$ and $\mathcal{F}(N,\mathbb{R})$
+            on $N$ \[T_F:\mathcal{F}(M,\mathbb{R})\to \mathcal{F}(N,\mathbb{R})\] The claim is that $T$ and $T_F$ are bijection,
+            i.e. given $T_F$ we can compute unique $T$. And if we find a basis of $\mathcal{F}(M,\mathbb{R})$, $T_F$ can
+            be written as a (infinity) matrix. This method has been used as recovering the map between two manifolds using
+            given relationships between function values on the two manifolds.</p>
+          <p>Based on Functional map, Rustamov [<a href="#shaped">3</a>] came up with a method to compare the differences between two manifolds. Given three manifolds A, B and
+            C, one can compute the difference between A and B and apply the difference to C to get a manifold D.</p>
+
+          <h2>4 Proposal</h2>
+          <p>$\kappa$-Curve satisfy all the desired geometric properties except for that it cannot reproduce a circle. So, I
+            want to modify $\kappa$-Curve to reproduce a circle. Notice that a circle and a simple closed curve are all 1-manifolds
+            and indeed there is a bijection between them. So, the final curve should be a deformation of a circle. To achieve
+            this goal, there're mainly three approaches.</p>
+          <h3>4.1 Shape differences</h3>
+          <p>Given a set of planar points $\{P_i\}_{i=1}^n$, one can generate a piece-wise quadratic kappa curve $$c_i(t)_{i=1}^n,
+            t\in[0,1].$$ This is a 1-manifold and I call it B. I can move $\{P_i\}$ on a circle as $\{Q_i\}$ via some arc
+            length sampling. Then there's a kappa curve interpolating $\{Q_i\}$ near a circle but not a circle. I call the
+            piece-wise quadratic curve $$\tilde{c}_i(t)_{i=1}^n, t\in[0,1]$$ manifold A. And the circle of $\{Q_i\}$ is a
+            manifold C. So, I can compute a difference between A and B and apply the difference to C to get a circular shape
+            D. D is the final curve I want.</p>
+          <p>However, this method may have a problem that there's no guarantee that the result curve is $G^2$ continuous or interpolate
+            $\{P_i\}$s as local maximum curvature points. Also, the result curve is likely to be a non-polynomial curve.</p>
+          <h3>4.2 Weight function</h3>
+          <p>$\kappa$-Curve has its rational quadratic version, however the weight choice is the biggest problem. I can still
+            use the shape difference bewteen $\kappa$-Curve and circular splines. But in this method, only weight functions
+            of the rational quadratic curve are optimized. To do this, the weights may be used in non-linear optimization.</p>
+
+          <h2>5 Originality</h2>
+          <p>$\kappa$-Curve and Functional Map are developed papers and I using a new view to apply the functional map method
+            to traditional curve modelling. This view is changing the whole basic construction of $\kappa$-Curve. So, the
+            originality should be that I'm using some other method to refine an existing curve theory.</p>
+
+          <h2>6 List of goals</h2>
+          <p>This course project has two milestones: update and final report. So, I separate the work as following:</p>
+          <h3>6.1 Goals for update</h3>
+          <ul>
+            <li>Implement shape differences based on functional map.</li>
+            <li>Find a functional map between $\kappa$-Curve and its circular control points.</li>
+            <li>Come up with the method using weights in the optimization for best shape differences.</li>
+          </ul>
+          <h3>6.2 Goals for final report</h3>
+          <ul>
+            <li>Try different functional basis.</li>
+            <li>Go over all the methods above and find a good one.</li>
+            <li>Generate the new family of curves.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>References</h2>
+          <p id="kappa">[1]
+            <a href="http://faculty.cs.tamu.edu/schaefer/research/kcurves.pdf">Yan, Z., Schiller, S., Wilensky, G., Carr, N. and Schaefer, S., 2017. k-curves: interpolation at local maximum
+              curvature. ACM Transactions on Graphics (TOG), 36(4), p.129.</a>
+          </p>
+          <p id="fmap">[2]
+            <a href="https://dl.acm.org/citation.cfm?id=2185526">Ovsjanikov, M., Ben-Chen, M., Solomon, J., Butscher, A. and Guibas, L., 2012. Functional maps: a flexible representation
+              of maps between shapes. ACM Transactions on Graphics (TOG), 31(4), p.30.</a>
+          </p>
+          <p id="shaped">[3]
+            <a href="https://dl.acm.org/citation.cfm?id=2461959">Rustamov, R.M., Ovsjanikov, M., Azencot, O., Ben-Chen, M., Chazal, F. and Guibas, L., 2013. Map-based exploration
+              of intrinsic shape differences and variability. ACM Transactions on Graphics (TOG), 32(4), p.72.</a>
+          </p>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="footer">
+      <p>&copy; Company 2017</p>
+    </footer>
+
+  </div>
+  <!-- /container -->
+</body>
+
+</html>

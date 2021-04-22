@@ -1,0 +1,1542 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     56516,       1532]
+NotebookOptionsPosition[     56029,       1512]
+NotebookOutlinePosition[     56376,       1527]
+CellTagsIndexPosition[     56333,       1524]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"Module", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"h", "=", "24"}], ",", 
+     RowBox[{"timecount", "=", "0"}], ",", 
+     RowBox[{"v", "=", "0.3"}], ",", 
+     RowBox[{"bullets", "=", 
+      RowBox[{"{", "}"}]}], ",", 
+     RowBox[{"ufos", "=", 
+      RowBox[{"{", "}"}]}], ",", 
+     RowBox[{"cannons", "=", 
+      RowBox[{"{", "}"}]}], ",", 
+     RowBox[{"cannonballs", "=", 
+      RowBox[{"{", "}"}]}], ",", 
+     RowBox[{"cannonbroken", "=", 
+      RowBox[{"{", "}"}]}], ",", 
+     RowBox[{"explosions", "=", 
+      RowBox[{"{", "}"}]}], ",", 
+     RowBox[{"i", "=", "0"}], ",", 
+     RowBox[{"dst", "=", 
+      RowBox[{"{", "}"}]}], ",", 
+     RowBox[{"score", "=", "0"}], ",", 
+     RowBox[{"missing", "=", "0"}], ",", 
+     RowBox[{"broken", "=", "0"}], ",", 
+     RowBox[{"alive", "=", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"5", ",", "23"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"7", ",", "23"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"9", ",", "23"}], "}"}]}], "}"}]}], ",", 
+     RowBox[{"gameover", "=", "False"}], ",", 
+     RowBox[{"tempdir", "=", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}]}]}], "}"}], ",", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"ufo", "[", "p_", "]"}], ":=", 
+     RowBox[{"Polygon", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "2"}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"2", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0.5"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}], "+", 
+       RowBox[{"Table", "[", 
+        RowBox[{"p", ",", 
+         RowBox[{"{", "6", "}"}]}], "]"}]}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"bullet", "[", "p_", "]"}], ":=", 
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"p", "+", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "0.5"}]}], "}"}]}], ",", 
+        RowBox[{"p", "+", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0.5"}], "}"}]}]}], "}"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"craft", "[", "p_", "]"}], ":=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Polygon", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1.5"}], ",", "0"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1.5", ",", "0"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", "0.9"}], "}"}]}], "}"}], "+", 
+         RowBox[{"Table", "[", 
+          RowBox[{"p", ",", 
+           RowBox[{"{", "3", "}"}]}], "]"}]}], "]"}], ",", 
+       RowBox[{"Polygon", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.5"}], ",", "0.5"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"0.5", ",", "0.5"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", "2"}], "}"}]}], "}"}], "+", 
+         RowBox[{"Table", "[", 
+          RowBox[{"p", ",", 
+           RowBox[{"{", "3", "}"}]}], "]"}]}], "]"}], ",", 
+       RowBox[{"Polygon", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", 
+             RowBox[{"-", "0.7"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", 
+             RowBox[{"-", "0.7"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", "0.5"}], "}"}]}], "}"}], "+", 
+         RowBox[{"Table", "[", 
+          RowBox[{"p", ",", 
+           RowBox[{"{", "3", "}"}]}], "]"}]}], "]"}], ",", "Orange", ",", 
+       RowBox[{"Polygon", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.4"}], ",", 
+             RowBox[{"-", "0.7"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", 
+             RowBox[{"-", "0.7"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.2"}], ",", 
+             RowBox[{"-", "1.5"}]}], "}"}]}], "}"}], "+", 
+         RowBox[{"Table", "[", 
+          RowBox[{"p", ",", 
+           RowBox[{"{", "3", "}"}]}], "]"}]}], "]"}], ",", 
+       RowBox[{"Polygon", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"0.4", ",", 
+             RowBox[{"-", "0.7"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", 
+             RowBox[{"-", "0.7"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"0.2", ",", 
+             RowBox[{"-", "1.5"}]}], "}"}]}], "}"}], "+", 
+         RowBox[{"Table", "[", 
+          RowBox[{"p", ",", 
+           RowBox[{"{", "3", "}"}]}], "]"}]}], "]"}]}], "}"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"cannon", "[", 
+      RowBox[{"p_", ",", "dir_"}], "]"}], ":=", 
+     RowBox[{"{", 
+      RowBox[{"Gray", ",", 
+       RowBox[{"Rectangle", "[", 
+        RowBox[{
+         RowBox[{"p", "+", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "1"}], ",", 
+            RowBox[{"-", "1"}]}], "}"}]}], ",", 
+         RowBox[{"p", "+", 
+          RowBox[{"{", 
+           RowBox[{"1", ",", "1"}], "}"}]}], ",", 
+         RowBox[{"RoundingRadius", "\[Rule]", "0.4"}]}], "]"}], ",", "Black", 
+       ",", 
+       RowBox[{"Rotate", "[", 
+        RowBox[{
+         RowBox[{"Rectangle", "[", 
+          RowBox[{
+           RowBox[{"p", "+", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "0.1"}], ",", 
+              RowBox[{"-", "0.2"}]}], "}"}]}], ",", 
+           RowBox[{"p", "+", 
+            RowBox[{"{", 
+             RowBox[{"1.4", ",", "0.2"}], "}"}]}]}], "]"}], ",", 
+         RowBox[{"Arg", "[", 
+          RowBox[{
+           RowBox[{"dir", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "+", 
+           RowBox[{
+            RowBox[{"dir", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], " ", "I"}]}], "]"}], ",", "p"}], 
+        "]"}]}], "}"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"Manipulate", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{"gameover", ",", 
+         RowBox[{"Goto", "[", "gover", "]"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"explosions", "=", 
+        RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"timecount", "++"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"0", "\[Equal]", 
+          RowBox[{"Mod", "[", 
+           RowBox[{"timecount", ",", "4"}], "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"bullets", ",", 
+            RowBox[{"u", "+", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", "2"}], "}"}]}]}], "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"bullets", "=", 
+           RowBox[{"SortBy", "[", 
+            RowBox[{"bullets", ",", "Last"}], "]"}]}], ";", 
+          RowBox[{"bullets", "=", 
+           RowBox[{"Reverse", "[", "bullets", "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"bullets", "[", 
+              RowBox[{"[", 
+               RowBox[{"1", ",", "2"}], "]"}], "]"}], ">", "25"}], ",", 
+            RowBox[{"bullets", "=", 
+             RowBox[{"Rest", "[", "bullets", "]"}]}]}], "]"}]}]}], "]"}], ";",
+        "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"0", "\[Equal]", 
+          RowBox[{"Mod", "[", 
+           RowBox[{"timecount", ",", "30"}], "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"ufos", ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"RandomReal", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"-", "8"}], ",", "8"}], "}"}], "]"}], ",", "25"}], 
+             "}"}]}], "]"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"ufos", "[", 
+              RowBox[{"[", 
+               RowBox[{"1", ",", "2"}], "]"}], "]"}], "<", 
+             RowBox[{"-", "3"}]}], ",", 
+            RowBox[{
+             RowBox[{"ufos", "=", 
+              RowBox[{"Rest", "[", "ufos", "]"}]}], ";", 
+             RowBox[{"missing", "++"}], ";", "\[IndentingNewLine]", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"4", "\[Equal]", "missing"}], ",", 
+               RowBox[{"gameover", "=", "True"}]}], "]"}]}]}], "]"}]}]}], 
+        "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"0", "\[Equal]", 
+          RowBox[{"Mod", "[", 
+           RowBox[{"timecount", ",", "5"}], "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"i", "=", "1"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"While", "[", 
+           RowBox[{
+            RowBox[{"i", "\[LessEqual]", 
+             RowBox[{"Length", "[", "ufos", "]"}]}], ",", 
+            RowBox[{
+             RowBox[{"dst", "=", 
+              RowBox[{"Table", "[", 
+               RowBox[{
+                RowBox[{"Norm", "[", 
+                 RowBox[{
+                  RowBox[{"ufos", "[", 
+                   RowBox[{"[", "i", "]"}], "]"}], "-", "j"}], "]"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{"j", ",", "bullets"}], "}"}]}], "]"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"Min", "[", "dst", "]"}], "\[LessEqual]", "1.5"}], 
+               ",", 
+               RowBox[{
+                RowBox[{"AppendTo", "[", 
+                 RowBox[{"explosions", ",", 
+                  RowBox[{"ufos", "[", 
+                   RowBox[{"[", "i", "]"}], "]"}]}], "]"}], ";", 
+                "\[IndentingNewLine]", 
+                RowBox[{"ufos", "=", 
+                 RowBox[{"Drop", "[", 
+                  RowBox[{"ufos", ",", 
+                   RowBox[{"{", "i", "}"}]}], "]"}]}], ";", 
+                RowBox[{"score", "+=", "10"}]}], ",", 
+               RowBox[{"i", "++"}]}], "]"}]}]}], "]"}]}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"0", "\[Equal]", 
+          RowBox[{"Mod", "[", 
+           RowBox[{"timecount", ",", "5"}], "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"i", "=", "1"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"While", "[", 
+           RowBox[{
+            RowBox[{"i", "\[LessEqual]", 
+             RowBox[{"Length", "[", "ufos", "]"}]}], ",", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Norm", "[", 
+                RowBox[{
+                 RowBox[{"ufos", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}], "-", "u"}], "]"}], 
+               "\[LessEqual]", "2"}], ",", 
+              RowBox[{
+               RowBox[{"AppendTo", "[", 
+                RowBox[{"explosions", ",", 
+                 RowBox[{"ufos", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}]}], "]"}], ";", 
+               "\[IndentingNewLine]", 
+               RowBox[{"ufos", "=", 
+                RowBox[{"Drop", "[", 
+                 RowBox[{"ufos", ",", 
+                  RowBox[{"{", "i", "}"}]}], "]"}]}], ";", 
+               RowBox[{"score", "+=", "5"}], ";", 
+               RowBox[{"broken", "++"}], ";", "\[IndentingNewLine]", 
+               RowBox[{"alive", "=", 
+                RowBox[{"Rest", "[", "alive", "]"}]}], ";", 
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{"3", "\[Equal]", "broken"}], ",", 
+                 RowBox[{"gameover", "=", "True"}]}], "]"}]}], ",", 
+              RowBox[{"i", "++"}]}], "]"}]}], "]"}]}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"ufos", "+=", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"0", ",", 
+            RowBox[{"-", "v"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"Length", "[", "ufos", "]"}], "}"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"bullets", "+=", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"0", ",", "1"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"Length", "[", "bullets", "]"}], "}"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"score", "<", "100"}], ",", 
+         RowBox[{"Goto", "[", "gover", "]"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"0", "\[Equal]", 
+          RowBox[{"Mod", "[", 
+           RowBox[{"timecount", ",", "300"}], "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"cannons", ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"RandomReal", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"-", "8"}], ",", "8"}], "}"}], "]"}], ",", "25"}], 
+             "}"}]}], "]"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"cannonbroken", ",", "0"}], "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"cannons", "[", 
+              RowBox[{"[", 
+               RowBox[{"1", ",", "2"}], "]"}], "]"}], "<", 
+             RowBox[{"-", "3"}]}], ",", 
+            RowBox[{
+             RowBox[{"cannons", "=", 
+              RowBox[{"Rest", "[", "cannons", "]"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"cannonbroken", "=", 
+              RowBox[{"Rest", "[", "cannonbroken", "]"}]}]}]}], "]"}]}]}], 
+        "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"0", "\[Equal]", 
+          RowBox[{"Mod", "[", 
+           RowBox[{"timecount", ",", "50"}], "]"}]}], ",", 
+         RowBox[{"Do", "[", 
+          RowBox[{
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"i", "[", 
+               RowBox[{"[", "2", "]"}], "]"}], ">", 
+              RowBox[{"u", "[", 
+               RowBox[{"[", "2", "]"}], "]"}]}], ",", 
+             RowBox[{
+              RowBox[{"tempdir", "=", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"u", "-", "i"}], ")"}], "/", 
+                RowBox[{"Norm", "[", 
+                 RowBox[{"u", "-", "i"}], "]"}]}]}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"AppendTo", "[", 
+               RowBox[{"cannonballs", ",", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"i", "+", 
+                   RowBox[{"tempdir", "*", "1.5"}]}], ",", "tempdir"}], 
+                 "}"}]}], "]"}]}]}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"i", ",", "cannons"}], "}"}]}], "]"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"0", "\[Equal]", 
+          RowBox[{"Mod", "[", 
+           RowBox[{"timecount", ",", "50"}], "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"i", "=", "1"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"While", "[", 
+           RowBox[{
+            RowBox[{"i", "\[LessEqual]", 
+             RowBox[{"Length", "[", "cannonballs", "]"}]}], ",", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Norm", "[", 
+                RowBox[{
+                 RowBox[{"cannonballs", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}], "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "]"}], ">", "30"}], ",", 
+              RowBox[{"cannonballs", "=", 
+               RowBox[{"Drop", "[", 
+                RowBox[{"cannonballs", ",", 
+                 RowBox[{"{", "i", "}"}]}], "]"}]}], ",", 
+              RowBox[{"i", "++"}]}], "]"}]}], "]"}]}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"0", "\[Equal]", 
+          RowBox[{"Mod", "[", 
+           RowBox[{"timecount", ",", "5"}], "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"i", "=", "1"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"While", "[", 
+           RowBox[{
+            RowBox[{"i", "\[LessEqual]", 
+             RowBox[{"Length", "[", "cannonballs", "]"}]}], ",", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Norm", "[", 
+                RowBox[{
+                 RowBox[{"cannonballs", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"i", ",", "1"}], "]"}], "]"}], "-", "u"}], "]"}], 
+               "\[LessEqual]", "2"}], ",", 
+              RowBox[{
+               RowBox[{"cannonballs", "=", 
+                RowBox[{"Drop", "[", 
+                 RowBox[{"cannonballs", ",", 
+                  RowBox[{"{", "i", "}"}]}], "]"}]}], ";", 
+               RowBox[{"broken", "++"}], ";", "\[IndentingNewLine]", 
+               RowBox[{"alive", "=", 
+                RowBox[{"Rest", "[", "alive", "]"}]}], ";", 
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{"3", "\[Equal]", "broken"}], ",", 
+                 RowBox[{"gameover", "=", "True"}]}], "]"}]}], ",", 
+              RowBox[{"i", "++"}]}], "]"}]}], "]"}]}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"0", "\[Equal]", 
+          RowBox[{"Mod", "[", 
+           RowBox[{"timecount", ",", "5"}], "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"i", "=", "1"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"While", "[", 
+           RowBox[{
+            RowBox[{"i", "\[LessEqual]", 
+             RowBox[{"Length", "[", "cannons", "]"}]}], ",", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Norm", "[", 
+                RowBox[{
+                 RowBox[{"cannons", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}], "-", "u"}], "]"}], 
+               "\[LessEqual]", "2"}], ",", 
+              RowBox[{
+               RowBox[{"AppendTo", "[", 
+                RowBox[{"explosions", ",", 
+                 RowBox[{"cannons", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}]}], "]"}], ";", 
+               RowBox[{"cannons", "=", 
+                RowBox[{"Drop", "[", 
+                 RowBox[{"cannons", ",", 
+                  RowBox[{"{", "i", "}"}]}], "]"}]}], ";", 
+               "\[IndentingNewLine]", 
+               RowBox[{"score", "+=", "20"}], ";", 
+               RowBox[{"broken", "++"}], ";", 
+               RowBox[{"alive", "=", 
+                RowBox[{"Rest", "[", "alive", "]"}]}], ";", 
+               "\[IndentingNewLine]", 
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{"3", "\[Equal]", "broken"}], ",", 
+                 RowBox[{"gameover", "=", "True"}]}], "]"}]}], ",", 
+              RowBox[{"i", "++"}]}], "]"}]}], "]"}]}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"0", "\[Equal]", 
+          RowBox[{"Mod", "[", 
+           RowBox[{"timecount", ",", "5"}], "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"i", "=", "1"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"While", "[", 
+           RowBox[{
+            RowBox[{"i", "\[LessEqual]", 
+             RowBox[{"Length", "[", "cannons", "]"}]}], ",", 
+            RowBox[{
+             RowBox[{"dst", "=", 
+              RowBox[{"Table", "[", 
+               RowBox[{
+                RowBox[{"Norm", "[", 
+                 RowBox[{
+                  RowBox[{"cannons", "[", 
+                   RowBox[{"[", "i", "]"}], "]"}], "-", "j"}], "]"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{"j", ",", "bullets"}], "}"}]}], "]"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"Min", "[", "dst", "]"}], "\[LessEqual]", "1.5"}], 
+               ",", 
+               RowBox[{
+                RowBox[{"cannonbroken", "[", 
+                 RowBox[{"[", "i", "]"}], "]"}], "+=", "1"}]}], "]"}], ";", 
+             RowBox[{"i", "++"}]}]}], "]"}]}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"0", "\[Equal]", 
+          RowBox[{"Mod", "[", 
+           RowBox[{"timecount", ",", "5"}], "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"i", "=", "1"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"While", "[", 
+           RowBox[{
+            RowBox[{"i", "\[LessEqual]", 
+             RowBox[{"Length", "[", "cannons", "]"}]}], ",", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{"5", "\[Equal]", 
+               RowBox[{"cannonbroken", "[", 
+                RowBox[{"[", "i", "]"}], "]"}]}], ",", 
+              RowBox[{
+               RowBox[{"AppendTo", "[", 
+                RowBox[{"explosions", ",", 
+                 RowBox[{"cannons", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}]}], "]"}], ";", 
+               "\[IndentingNewLine]", 
+               RowBox[{"cannons", "=", 
+                RowBox[{"Drop", "[", 
+                 RowBox[{"cannons", ",", 
+                  RowBox[{"{", "i", "}"}]}], "]"}]}], ";", 
+               "\[IndentingNewLine]", 
+               RowBox[{"cannonbroken", "=", 
+                RowBox[{"Drop", "[", 
+                 RowBox[{"cannonbroken", ",", 
+                  RowBox[{"{", "i", "}"}]}], "]"}]}], ";", 
+               RowBox[{"score", "+=", "50"}]}], ",", 
+              RowBox[{"i", "++"}]}], "]"}]}], "]"}]}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"cannons", "+=", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"0", ",", 
+            RowBox[{
+             RowBox[{"-", "v"}], "/", "3"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"Length", "[", "cannons", "]"}], "}"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"cannonballs", "+=", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"v", "*", 
+             RowBox[{"i", "[", 
+              RowBox[{"[", "2", "]"}], "]"}]}], ",", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", "0"}], "}"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "cannonballs"}], "}"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Label", "[", "gover", "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Graphics", "[", 
+        RowBox[{
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"!", "gameover"}], ",", 
+           RowBox[{"Join", "[", 
+            RowBox[{
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"ufo", "[", "i", "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"i", ",", "ufos"}], "}"}]}], "]"}], ",", 
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"bullet", "[", "i", "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"i", ",", "bullets"}], "}"}]}], "]"}], ",", 
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"cannon", "[", 
+                RowBox[{"i", ",", 
+                 RowBox[{"u", "-", "i"}]}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"i", ",", "cannons"}], "}"}]}], "]"}], ",", 
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"Disk", "[", 
+                RowBox[{
+                 RowBox[{"i", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], ",", "0.2"}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"i", ",", "cannonballs"}], "}"}]}], "]"}], ",", 
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"Circle", "[", 
+                RowBox[{"i", ",", "2"}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"i", ",", "explosions"}], "}"}]}], "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"craft", "[", "u", "]"}], ",", 
+               RowBox[{"Text", "[", 
+                RowBox[{
+                 RowBox[{"Style", "[", 
+                  RowBox[{"score", ",", 
+                   RowBox[{"FontSize", "\[Rule]", "24"}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"-", "8"}], ",", "23"}], "}"}], ",", 
+                 RowBox[{"Background", "\[Rule]", "White"}]}], "]"}], ",", 
+               "Red"}], "}"}], ",", 
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"Disk", "[", 
+                RowBox[{"j", ",", 
+                 RowBox[{"{", 
+                  RowBox[{"0.5", ",", "0.3"}], "}"}]}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"j", ",", "alive"}], "}"}]}], "]"}]}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Rectangle", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"-", "10"}], ",", 
+                 RowBox[{"-", "2"}]}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"10", ",", "24"}], "}"}]}], "]"}], ",", 
+             RowBox[{"Text", "[", 
+              RowBox[{
+               RowBox[{"Style", "[", 
+                RowBox[{"\"\< Game over! \>\"", ",", 
+                 RowBox[{"FontSize", "\[Rule]", "36"}]}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"0", ",", "16"}], "}"}], ",", 
+               RowBox[{"Background", "\[Rule]", "White"}]}], "]"}], ",", 
+             RowBox[{"Text", "[", 
+              RowBox[{
+               RowBox[{"Style", "[", 
+                RowBox[{"\"\< Score: \>\"", ",", 
+                 RowBox[{"FontSize", "\[Rule]", "24"}]}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"0", ",", "10"}], "}"}], ",", 
+               RowBox[{"Background", "\[Rule]", "White"}]}], "]"}], ",", 
+             RowBox[{"Text", "[", 
+              RowBox[{
+               RowBox[{"Style", "[", 
+                RowBox[{"score", ",", 
+                 RowBox[{"FontSize", "\[Rule]", "24"}]}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"0", ",", "7"}], "}"}], ",", 
+               RowBox[{"Background", "\[Rule]", "White"}]}], "]"}]}], "}"}]}],
+           "]"}], ",", 
+         RowBox[{"Axes", "\[Rule]", "False"}], ",", 
+         RowBox[{"PlotRange", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "10"}], ",", "10"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "2"}], ",", "24"}], "}"}]}], "}"}]}]}], "]"}]}], 
+      ",", 
+      RowBox[{"{", 
+       RowBox[{"u", ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "8.5"}], ",", "0"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"8.5", ",", "22"}], "}"}]}], "}"}], ",", 
+      RowBox[{"ControlPlacement", "\[Rule]", "Right"}]}], "]"}]}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.711426080527716*^9, 3.7114260805407257`*^9}}],
+
+Cell[BoxData["\[IndentingNewLine]"], "Input",
+ CellChangeTimes->{3.711426091690208*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Graphics", "[", 
+  RowBox[{"ufo", "[", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0"}], "}"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.7114269890414457`*^9, 3.7114269958019695`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[
+  PolygonBox[{{-2, 0}, {0, -1}, {2, 0}, {1, 0}, {0, 0.5}, {-1, 
+    0}}]]], "Output",
+ CellChangeTimes->{{3.7114269964584036`*^9, 3.7114270038103237`*^9}}]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ufo", "[", "p_", "]"}], ":=", 
+  RowBox[{"Polygon", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "2"}], ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", 
+        RowBox[{"-", "1"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"2", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0.5"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}], "+", 
+    RowBox[{"Table", "[", 
+     RowBox[{"p", ",", "6"}], "]"}]}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"bullet", "[", "p_", "]"}], ":=", 
+  RowBox[{"Line", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"p", "+", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", 
+        RowBox[{"-", "0.5"}]}], "}"}]}], ",", 
+     RowBox[{"p", "+", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0.5"}], "}"}]}]}], "}"}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"craft", "[", "p_", "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"Polygon", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "1.5"}], ",", "0"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"1.5", ",", "0"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0.9"}], "}"}]}], "}"}], "+", 
+      RowBox[{"Table", "[", 
+       RowBox[{"p", ",", 
+        RowBox[{"{", "3", "}"}]}], "]"}]}], "]"}], ",", 
+    RowBox[{"Polygon", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "0.5"}], ",", "0.5"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0.5", ",", "0.5"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "2"}], "}"}]}], "}"}], "+", 
+      RowBox[{"Table", "[", 
+       RowBox[{"p", ",", 
+        RowBox[{"{", "3", "}"}]}], "]"}]}], "]"}], ",", 
+    RowBox[{"Polygon", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "1"}], ",", 
+          RowBox[{"-", "0.7"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", 
+          RowBox[{"-", "0.7"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0.5"}], "}"}]}], "}"}], "+", 
+      RowBox[{"Table", "[", 
+       RowBox[{"p", ",", 
+        RowBox[{"{", "3", "}"}]}], "]"}]}], "]"}], ",", "Orange", ",", 
+    RowBox[{"Polygon", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "0.4"}], ",", 
+          RowBox[{"-", "0.7"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", 
+          RowBox[{"-", "0.7"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "0.2"}], ",", 
+          RowBox[{"-", "1.5"}]}], "}"}]}], "}"}], "+", 
+      RowBox[{"Table", "[", 
+       RowBox[{"p", ",", 
+        RowBox[{"{", "3", "}"}]}], "]"}]}], "]"}], ",", 
+    RowBox[{"Polygon", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0.4", ",", 
+          RowBox[{"-", "0.7"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", 
+          RowBox[{"-", "0.7"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0.2", ",", 
+          RowBox[{"-", "1.5"}]}], "}"}]}], "}"}], "+", 
+      RowBox[{"Table", "[", 
+       RowBox[{"p", ",", 
+        RowBox[{"{", "3", "}"}]}], "]"}]}], "]"}]}], 
+   "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"cannon", "[", 
+   RowBox[{"p_", ",", "dir_"}], "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{"Gray", ",", 
+    RowBox[{"Rectangle", "[", 
+     RowBox[{
+      RowBox[{"p", "+", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "1"}], ",", 
+         RowBox[{"-", "1"}]}], "}"}]}], ",", 
+      RowBox[{"p", "+", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", "1"}], "}"}]}], ",", 
+      RowBox[{"RoundingRadius", "\[Rule]", "0.4"}]}], "]"}], ",", "Black", 
+    ",", 
+    RowBox[{"Rotate", "[", 
+     RowBox[{
+      RowBox[{"Rectangle", "[", 
+       RowBox[{
+        RowBox[{"p", "+", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "0.1"}], ",", 
+           RowBox[{"-", "0.2"}]}], "}"}]}], ",", 
+        RowBox[{"p", "+", 
+         RowBox[{"{", 
+          RowBox[{"1.4", ",", "0.2"}], "}"}]}]}], "]"}], ",", 
+      RowBox[{"Arg", "[", 
+       RowBox[{
+        RowBox[{"dir", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}],
+         "+", 
+        RowBox[{
+         RowBox[{
+         "dir", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], " ", 
+         "I"}]}], "]"}], ",", "p"}], "]"}]}], "}"}]}]}], "Input",
+ CellChangeTimes->{{3.7114261402196198`*^9, 3.7114261929378977`*^9}, {
+  3.7114269998576746`*^9, 3.71142700088436*^9}, {3.711427257347274*^9, 
+  3.711427267899335*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Module", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"h", "=", "24"}], ",", 
+     RowBox[{"timecount", "=", "0"}], ",", 
+     RowBox[{"v", "=", "0.3"}], ",", 
+     RowBox[{"bullets", "=", 
+      RowBox[{"{", "}"}]}], ",", 
+     RowBox[{"ufos", "=", 
+      RowBox[{"{", "}"}]}], ",", 
+     RowBox[{"cannons", "=", 
+      RowBox[{"{", "}"}]}], ",", 
+     RowBox[{"cannonballs", "=", 
+      RowBox[{"{", "}"}]}], ",", 
+     RowBox[{"cannonbroken", "=", 
+      RowBox[{"{", "}"}]}], ",", 
+     RowBox[{"explosions", "=", 
+      RowBox[{"{", "}"}]}], ",", 
+     RowBox[{"i", "=", "0"}], ",", 
+     RowBox[{"dst", "=", 
+      RowBox[{"{", "}"}]}], ",", 
+     RowBox[{"score", "=", "0"}], ",", 
+     RowBox[{"missing", "=", "0"}], ",", 
+     RowBox[{"broken", "=", "0"}], ",", 
+     RowBox[{"alive", "=", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"5", ",", "23"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"7", ",", "23"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"9", ",", "23"}], "}"}]}], "}"}]}], ",", 
+     RowBox[{"gameover", "=", "False"}], ",", 
+     RowBox[{"tempdir", "=", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}]}]}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"Manipulate", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"If", "[", 
+       RowBox[{"gameover", ",", 
+        RowBox[{"Goto", "[", "gover", "]"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"explosions", "=", 
+       RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"timecount", "++"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"0", "\[Equal]", 
+         RowBox[{"Mod", "[", 
+          RowBox[{"timecount", ",", "4"}], "]"}]}], ",", 
+        RowBox[{
+         RowBox[{"AppendTo", "[", 
+          RowBox[{"bullets", ",", 
+           RowBox[{"u", "+", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", "2"}], "}"}]}]}], "]"}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"bullets", "=", 
+          RowBox[{"SortBy", "[", 
+           RowBox[{"bullets", ",", "Last"}], "]"}]}], ";", 
+         RowBox[{"bullets", "=", 
+          RowBox[{"Reverse", "[", "bullets", "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"bullets", "[", 
+             RowBox[{"[", 
+              RowBox[{"1", ",", "2"}], "]"}], "]"}], ">", "25"}], ",", 
+           RowBox[{"bullets", "=", 
+            RowBox[{"Rest", "[", "bullets", "]"}]}]}], "]"}]}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"0", "\[Equal]", 
+         RowBox[{"Mod", "[", 
+          RowBox[{"timecount", ",", "30"}], "]"}]}], ",", 
+        RowBox[{
+         RowBox[{"AppendTo", "[", 
+          RowBox[{"ufos", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"RandomReal", "[", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"-", "8"}], ",", "8"}], "}"}], "]"}], ",", "25"}], 
+            "}"}]}], "]"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"ufos", "[", 
+             RowBox[{"[", 
+              RowBox[{"1", ",", "2"}], "]"}], "]"}], "<", 
+            RowBox[{"-", "3"}]}], ",", 
+           RowBox[{
+            RowBox[{"ufos", "=", 
+             RowBox[{"Rest", "[", "ufos", "]"}]}], ";", 
+            RowBox[{"missing", "++"}], ";", "\[IndentingNewLine]", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{"4", "\[Equal]", "missing"}], ",", 
+              RowBox[{"gameover", "=", "True"}]}], "]"}]}]}], "]"}]}]}], 
+       "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"0", "\[Equal]", 
+         RowBox[{"Mod", "[", 
+          RowBox[{"timecount", ",", "5"}], "]"}]}], ",", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"While", "[", 
+          RowBox[{
+           RowBox[{"i", "\[LessEqual]", 
+            RowBox[{"Length", "[", "ufos", "]"}]}], ",", 
+           RowBox[{
+            RowBox[{"dst", "=", 
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"Norm", "[", 
+                RowBox[{
+                 RowBox[{"ufos", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}], "-", "j"}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"j", ",", "bullets"}], "}"}]}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Min", "[", "dst", "]"}], "\[LessEqual]", "1.5"}], ",", 
+              RowBox[{
+               RowBox[{"AppendTo", "[", 
+                RowBox[{"explosions", ",", 
+                 RowBox[{"ufos", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}]}], "]"}], ";", 
+               "\[IndentingNewLine]", 
+               RowBox[{"ufos", "=", 
+                RowBox[{"Drop", "[", 
+                 RowBox[{"ufos", ",", 
+                  RowBox[{"{", "i", "}"}]}], "]"}]}], ";", 
+               RowBox[{"score", "+=", "10"}]}], ",", 
+              RowBox[{"i", "++"}]}], "]"}]}]}], "]"}]}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"0", "\[Equal]", 
+         RowBox[{"Mod", "[", 
+          RowBox[{"timecount", ",", "5"}], "]"}]}], ",", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"While", "[", 
+          RowBox[{
+           RowBox[{"i", "\[LessEqual]", 
+            RowBox[{"Length", "[", "ufos", "]"}]}], ",", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Norm", "[", 
+               RowBox[{
+                RowBox[{"ufos", "[", 
+                 RowBox[{"[", "i", "]"}], "]"}], "-", "u"}], "]"}], 
+              "\[LessEqual]", "2"}], ",", 
+             RowBox[{
+              RowBox[{"AppendTo", "[", 
+               RowBox[{"explosions", ",", 
+                RowBox[{"ufos", "[", 
+                 RowBox[{"[", "i", "]"}], "]"}]}], "]"}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"ufos", "=", 
+               RowBox[{"Drop", "[", 
+                RowBox[{"ufos", ",", 
+                 RowBox[{"{", "i", "}"}]}], "]"}]}], ";", 
+              RowBox[{"score", "+=", "5"}], ";", 
+              RowBox[{"broken", "++"}], ";", "\[IndentingNewLine]", 
+              RowBox[{"alive", "=", 
+               RowBox[{"Rest", "[", "alive", "]"}]}], ";", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"3", "\[Equal]", "broken"}], ",", 
+                RowBox[{"gameover", "=", "True"}]}], "]"}]}], ",", 
+             RowBox[{"i", "++"}]}], "]"}]}], "]"}]}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"ufos", "+=", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "v"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"Length", "[", "ufos", "]"}], "}"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"bullets", "+=", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"Length", "[", "bullets", "]"}], "}"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"score", "<", "100"}], ",", 
+        RowBox[{"Goto", "[", "gover", "]"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"0", "\[Equal]", 
+         RowBox[{"Mod", "[", 
+          RowBox[{"timecount", ",", "300"}], "]"}]}], ",", 
+        RowBox[{
+         RowBox[{"AppendTo", "[", 
+          RowBox[{"cannons", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"RandomReal", "[", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"-", "8"}], ",", "8"}], "}"}], "]"}], ",", "25"}], 
+            "}"}]}], "]"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"AppendTo", "[", 
+          RowBox[{"cannonbroken", ",", "0"}], "]"}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"cannons", "[", 
+             RowBox[{"[", 
+              RowBox[{"1", ",", "2"}], "]"}], "]"}], "<", 
+            RowBox[{"-", "3"}]}], ",", 
+           RowBox[{
+            RowBox[{"cannons", "=", 
+             RowBox[{"Rest", "[", "cannons", "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"cannonbroken", "=", 
+             RowBox[{"Rest", "[", "cannonbroken", "]"}]}]}]}], "]"}]}]}], 
+       "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"0", "\[Equal]", 
+         RowBox[{"Mod", "[", 
+          RowBox[{"timecount", ",", "50"}], "]"}]}], ",", 
+        RowBox[{"Do", "[", 
+         RowBox[{
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"i", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], ">", 
+             RowBox[{"u", "[", 
+              RowBox[{"[", "2", "]"}], "]"}]}], ",", 
+            RowBox[{
+             RowBox[{"tempdir", "=", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"u", "-", "i"}], ")"}], "/", 
+               RowBox[{"Norm", "[", 
+                RowBox[{"u", "-", "i"}], "]"}]}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"AppendTo", "[", 
+              RowBox[{"cannonballs", ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"i", "+", 
+                  RowBox[{"tempdir", "*", "1.5"}]}], ",", "tempdir"}], 
+                "}"}]}], "]"}]}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "cannons"}], "}"}]}], "]"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"0", "\[Equal]", 
+         RowBox[{"Mod", "[", 
+          RowBox[{"timecount", ",", "50"}], "]"}]}], ",", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"While", "[", 
+          RowBox[{
+           RowBox[{"i", "\[LessEqual]", 
+            RowBox[{"Length", "[", "cannonballs", "]"}]}], ",", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Norm", "[", 
+               RowBox[{
+                RowBox[{"cannonballs", "[", 
+                 RowBox[{"[", "i", "]"}], "]"}], "[", 
+                RowBox[{"[", "1", "]"}], "]"}], "]"}], ">", "30"}], ",", 
+             RowBox[{"cannonballs", "=", 
+              RowBox[{"Drop", "[", 
+               RowBox[{"cannonballs", ",", 
+                RowBox[{"{", "i", "}"}]}], "]"}]}], ",", 
+             RowBox[{"i", "++"}]}], "]"}]}], "]"}]}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"0", "\[Equal]", 
+         RowBox[{"Mod", "[", 
+          RowBox[{"timecount", ",", "5"}], "]"}]}], ",", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"While", "[", 
+          RowBox[{
+           RowBox[{"i", "\[LessEqual]", 
+            RowBox[{"Length", "[", "cannonballs", "]"}]}], ",", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Norm", "[", 
+               RowBox[{
+                RowBox[{"cannonballs", "[", 
+                 RowBox[{"[", 
+                  RowBox[{"i", ",", "1"}], "]"}], "]"}], "-", "u"}], "]"}], 
+              "\[LessEqual]", "2"}], ",", 
+             RowBox[{
+              RowBox[{"cannonballs", "=", 
+               RowBox[{"Drop", "[", 
+                RowBox[{"cannonballs", ",", 
+                 RowBox[{"{", "i", "}"}]}], "]"}]}], ";", 
+              RowBox[{"broken", "++"}], ";", "\[IndentingNewLine]", 
+              RowBox[{"alive", "=", 
+               RowBox[{"Rest", "[", "alive", "]"}]}], ";", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"3", "\[Equal]", "broken"}], ",", 
+                RowBox[{"gameover", "=", "True"}]}], "]"}]}], ",", 
+             RowBox[{"i", "++"}]}], "]"}]}], "]"}]}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"0", "\[Equal]", 
+         RowBox[{"Mod", "[", 
+          RowBox[{"timecount", ",", "5"}], "]"}]}], ",", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"While", "[", 
+          RowBox[{
+           RowBox[{"i", "\[LessEqual]", 
+            RowBox[{"Length", "[", "cannons", "]"}]}], ",", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Norm", "[", 
+               RowBox[{
+                RowBox[{"cannons", "[", 
+                 RowBox[{"[", "i", "]"}], "]"}], "-", "u"}], "]"}], 
+              "\[LessEqual]", "2"}], ",", 
+             RowBox[{
+              RowBox[{"AppendTo", "[", 
+               RowBox[{"explosions", ",", 
+                RowBox[{"cannons", "[", 
+                 RowBox[{"[", "i", "]"}], "]"}]}], "]"}], ";", 
+              RowBox[{"cannons", "=", 
+               RowBox[{"Drop", "[", 
+                RowBox[{"cannons", ",", 
+                 RowBox[{"{", "i", "}"}]}], "]"}]}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"score", "+=", "20"}], ";", 
+              RowBox[{"broken", "++"}], ";", 
+              RowBox[{"alive", "=", 
+               RowBox[{"Rest", "[", "alive", "]"}]}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"3", "\[Equal]", "broken"}], ",", 
+                RowBox[{"gameover", "=", "True"}]}], "]"}]}], ",", 
+             RowBox[{"i", "++"}]}], "]"}]}], "]"}]}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"0", "\[Equal]", 
+         RowBox[{"Mod", "[", 
+          RowBox[{"timecount", ",", "5"}], "]"}]}], ",", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"While", "[", 
+          RowBox[{
+           RowBox[{"i", "\[LessEqual]", 
+            RowBox[{"Length", "[", "cannons", "]"}]}], ",", 
+           RowBox[{
+            RowBox[{"dst", "=", 
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"Norm", "[", 
+                RowBox[{
+                 RowBox[{"cannons", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}], "-", "j"}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"j", ",", "bullets"}], "}"}]}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Min", "[", "dst", "]"}], "\[LessEqual]", "1.5"}], ",", 
+              RowBox[{
+               RowBox[{"cannonbroken", "[", 
+                RowBox[{"[", "i", "]"}], "]"}], "+=", "1"}]}], "]"}], ";", 
+            RowBox[{"i", "++"}]}]}], "]"}]}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"0", "\[Equal]", 
+         RowBox[{"Mod", "[", 
+          RowBox[{"timecount", ",", "5"}], "]"}]}], ",", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"While", "[", 
+          RowBox[{
+           RowBox[{"i", "\[LessEqual]", 
+            RowBox[{"Length", "[", "cannons", "]"}]}], ",", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"5", "\[Equal]", 
+              RowBox[{"cannonbroken", "[", 
+               RowBox[{"[", "i", "]"}], "]"}]}], ",", 
+             RowBox[{
+              RowBox[{"AppendTo", "[", 
+               RowBox[{"explosions", ",", 
+                RowBox[{"cannons", "[", 
+                 RowBox[{"[", "i", "]"}], "]"}]}], "]"}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"cannons", "=", 
+               RowBox[{"Drop", "[", 
+                RowBox[{"cannons", ",", 
+                 RowBox[{"{", "i", "}"}]}], "]"}]}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"cannonbroken", "=", 
+               RowBox[{"Drop", "[", 
+                RowBox[{"cannonbroken", ",", 
+                 RowBox[{"{", "i", "}"}]}], "]"}]}], ";", 
+              RowBox[{"score", "+=", "50"}]}], ",", 
+             RowBox[{"i", "++"}]}], "]"}]}], "]"}]}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"cannons", "+=", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{
+            RowBox[{"-", "v"}], "/", "3"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"Length", "[", "cannons", "]"}], "}"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"cannonballs", "+=", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"v", "*", 
+            RowBox[{"i", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", "0"}], "}"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", "cannonballs"}], "}"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Label", "[", "gover", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Graphics", "[", 
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"!", "gameover"}], ",", 
+          RowBox[{"Join", "[", 
+           RowBox[{
+            RowBox[{"Table", "[", 
+             RowBox[{
+              RowBox[{"ufo", "[", "i", "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"i", ",", "ufos"}], "}"}]}], "]"}], ",", 
+            RowBox[{"Table", "[", 
+             RowBox[{
+              RowBox[{"bullet", "[", "i", "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"i", ",", "bullets"}], "}"}]}], "]"}], ",", 
+            RowBox[{"Table", "[", 
+             RowBox[{
+              RowBox[{"cannon", "[", 
+               RowBox[{"i", ",", 
+                RowBox[{"u", "-", "i"}]}], "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"i", ",", "cannons"}], "}"}]}], "]"}], ",", 
+            RowBox[{"Table", "[", 
+             RowBox[{
+              RowBox[{"Disk", "[", 
+               RowBox[{
+                RowBox[{"i", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], ",", "0.2"}], "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"i", ",", "cannonballs"}], "}"}]}], "]"}], ",", 
+            RowBox[{"Table", "[", 
+             RowBox[{
+              RowBox[{"Circle", "[", 
+               RowBox[{"i", ",", "2"}], "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"i", ",", "explosions"}], "}"}]}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"craft", "[", "u", "]"}], ",", 
+              RowBox[{"Text", "[", 
+               RowBox[{
+                RowBox[{"Style", "[", 
+                 RowBox[{"score", ",", 
+                  RowBox[{"FontSize", "\[Rule]", "24"}]}], "]"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"-", "8"}], ",", "23"}], "}"}], ",", 
+                RowBox[{"Background", "\[Rule]", "White"}]}], "]"}], ",", 
+              "Red"}], "}"}], ",", 
+            RowBox[{"Table", "[", 
+             RowBox[{
+              RowBox[{"Disk", "[", 
+               RowBox[{"j", ",", 
+                RowBox[{"{", 
+                 RowBox[{"0.5", ",", "0.3"}], "}"}]}], "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"j", ",", "alive"}], "}"}]}], "]"}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Rectangle", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"-", "10"}], ",", 
+                RowBox[{"-", "2"}]}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"10", ",", "24"}], "}"}]}], "]"}], ",", 
+            RowBox[{"Text", "[", 
+             RowBox[{
+              RowBox[{"Style", "[", 
+               RowBox[{"\"\< Game over! \>\"", ",", 
+                RowBox[{"FontSize", "\[Rule]", "36"}]}], "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"0", ",", "16"}], "}"}], ",", 
+              RowBox[{"Background", "\[Rule]", "White"}]}], "]"}], ",", 
+            RowBox[{"Text", "[", 
+             RowBox[{
+              RowBox[{"Style", "[", 
+               RowBox[{"\"\< Score: \>\"", ",", 
+                RowBox[{"FontSize", "\[Rule]", "24"}]}], "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"0", ",", "10"}], "}"}], ",", 
+              RowBox[{"Background", "\[Rule]", "White"}]}], "]"}], ",", 
+            RowBox[{"Text", "[", 
+             RowBox[{
+              RowBox[{"Style", "[", 
+               RowBox[{"score", ",", 
+                RowBox[{"FontSize", "\[Rule]", "24"}]}], "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"0", ",", "7"}], "}"}], ",", 
+              RowBox[{"Background", "\[Rule]", "White"}]}], "]"}]}], "}"}]}], 
+         "]"}], ",", 
+        RowBox[{"Axes", "\[Rule]", "False"}], ",", 
+        RowBox[{"PlotRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "10"}], ",", "10"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "2"}], ",", "24"}], "}"}]}], "}"}]}]}], "]"}]}], 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{"u", ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "8.5"}], ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"8.5", ",", "22"}], "}"}]}], "}"}], ",", 
+     RowBox[{"ControlPlacement", "\[Rule]", "Right"}]}], "]"}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.711426080527716*^9, 3.7114260805407257`*^9}, {
+  3.7114261217412605`*^9, 3.7114261976280336`*^9}}]
+},
+WindowSize->{1366, 685},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+FrontEndVersion->"10.3 for Microsoft Windows (64-bit) (December 10, 2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 27875, 734, 1212, "Input"],
+Cell[28436, 756, 87, 1, 52, "Input"],
+Cell[CellGroupData[{
+Cell[28548, 761, 210, 5, 31, "Input"],
+Cell[28761, 768, 183, 4, 159, "Output"]
+}, Open  ]],
+Cell[28959, 775, 4950, 159, 152, "Input"],
+Cell[33912, 936, 22113, 574, 1072, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)
+

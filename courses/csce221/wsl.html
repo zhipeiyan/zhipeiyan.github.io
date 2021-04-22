@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="Description" content="CSCE-221">
+<meta name="Keywords" content="CSCE 221, Data Structures and Algorithms, Computer Science, Texas A&M University">
+<link rel="icon" href="../../images/Z.png">
+<title>Windows Subsystem for Linux</title>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="../../css/bootstrap.css">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+  <div class="container">
+    <a href="./">
+    <h1><center>Fall 2019 CSCE-221 Data Structures and Algorithms</center></h1>
+	<h1><center>Lab Sections 501 - 504</center></h1>
+	</a>
+	<hr>
+    <h2>How to install Linux (WSL) from Windows 10 App Store</h2>
+    <hr>
+	<p><a href="https://docs.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a> (WSL) is native linux environment on Windows 10.</p>
+	<h4>Install</h4>
+	<p>Open <b>Control panel</b> -> <b>Programs</b> -> <b>Turn Windows features on or off</b></p>
+	<img src="images/control.png" alt="Control panel">
+	<p>Make sure Windows Subsystem for Linux has be checked.</p>
+	<img src="images/wsl.png" alt="wsl">
+	<p>Go to Windows and search for linux</p>
+	<img src="images/store.png" alt="store">
+	<p>Choose the distribution you want</p>
+	<p>More instruction can be found from <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">https://docs.microsoft.com/en-us/windows/wsl/install-win10</a></p>
+	<h4>Run</h4>
+	<p>Start the linux shell you just installed.</p>
+	<p>Type <kbd>$mount</kbd> to find the location of your Windows drives like C:</p>
+	<img src="images/mount.png" alt="mount">
+	<p>You can build a symbolic link to your frequent use folders in Windows Explorer.</p>
+	<p><code>ln -s path/you/want/to/link new/folder/here</code></p>
+	<p>First, build a folder called <code>CSCE221</code> in your Documents directory and put some files inside.</p>
+	<img src="images/doc.png" alt="Documents">
+	<p>Then use <code>ln</code> to build a link to visit the files.</p>
+	<img src="images/ln.png" alt="ln">
+	<h3>Resources</h3>
+	<p><a href="https://docs.microsoft.com/en-us/windows/wsl/faq">https://docs.microsoft.com/en-us/windows/wsl/faq</a></p>
+	<p><a href="hhttps://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux">https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux</a></p>
+	<button onclick="history.back()">Go Back</button>
+  </div>
+<hr>
+<footer class="text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <p>Copyright © Zhipei Yan. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script src="js/jquery-1.11.3.min.js"></script> 
+<!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="js/bootstrap.js"></script>
+</body>
+</html>

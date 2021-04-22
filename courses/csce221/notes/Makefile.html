@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="Description" content="CSCE-221">
+<meta name="Keywords" content="CSCE 221, Data Structures and Algorithms, Computer Science, Texas A&M University">
+<link rel="icon" href="../../../images/Z.png">
+<title>CSCE-221</title>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="../../../css/bootstrap.css">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+  <div class="container">
+    <a href="../">
+    <h1><center>Fall 2019 CSCE-221 Data Structures and Algorithms</center></h1>
+	<h1><center>Lab Sections 501 - 504</center></h1>
+	</a>
+	<hr>
+    <h2>Makefile</h2>
+    <hr>
+	<p>Check eCampus for lab slides.</p>
+	<p>Rules:</p>
+	<p><pre><code>&lt;target&gt;: &lt;Dependency list&gt;
+&lt;tab&gt;&lt;command&gt;
+</code></pre></p>
+	<p>Here's a sample Makefile</p>
+	<p><pre><code>output.out: driver.o Airplane.o
+	g++ -Wall -std=c++11 driver.o Airplane.o -o output.out
+driver.o: driver.cpp Airplane.h
+	g++ -Wall -std=c++11 -c driver.cpp
+Airplane.o: Airplane.cpp Airplane.h
+	g++ -Wall -std=c++11 -c Airplane.cpp
+
+clean:
+	rm *.o
+	rm output.out
+
+run:
+	./output.out
+</code></pre></p>
+	<p>Notes:</p>
+	<ol>
+		<li>The filename should be exactly <b>Makefile</b>, no extention name like .txt. The filename is case sensitive.</li>
+		<li>Your output executable target should match the name of the -o option for our simple examples. Or the checking of "up to date" may fail.</li>
+		<li>Be care with the clean and run tags, your code should precisely delete or run your output binary file.</li>
+	</ol>
+	<h4>Resources</h4>
+	<p><a href="https://wiki.cse.tamu.edu/index.php/Makefiles_C_C%2B%2B">https://wiki.cse.tamu.edu/index.php/Makefiles_C_C++</a></p>
+	<p><a href="https://www.gnu.org/software/make/manual/html_node/Simple-Makefile.html#Simple-Makefile">https://www.gnu.org/software/make/manual/html_node/Simple-Makefile.html#Simple-Makefile</a></p>
+	<button onclick="history.back()">Go Back</button>
+  </div>
+<hr>
+<footer class="text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <p>Copyright © Zhipei Yan. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script src="js/jquery-1.11.3.min.js"></script> 
+<!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="js/bootstrap.js"></script>
+</body>
+</html>

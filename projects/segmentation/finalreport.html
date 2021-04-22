@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0047)http://students.cs.tamu.edu/yanzp/segmentation/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Report</title>
+<STYLE TYPE="text/css"> 
+BODY { 
+	padding-left: 300px; 
+	padding-right: 300px; 
+} 
+</STYLE>
+
+</head>
+
+<body>
+  <h3 align="center"><font color="#990000">Course Project for CSE645:Geometric Modeling</font></h3>
+
+  <h1 align="center">Study on Segmentation</h1>
+  
+  <h2>1 Introduction</h2>
+  <p>Segmentation is an important topic in computer graphics as it gives a kind of shape abstraction which helps geometric processing and human understanding of 3D shapes. Segmentation can provide fundamental information for geometric modeling, deformation, mesh simplification and skeleton extraction. In the past several years, many methods have been come up to mesh segmentation.</p>
+  <p>For a 2-manifold M(V,E,F), we’ll define a segmentation M’ as a set of sub-meshes of M. M’={M<sub>0</sub>,M<sub>1</sub>,…M<sub>n</sub>}, where Mi=(V<sub>i</sub>,E<sub>i</sub>,F<sub>i</sub>) and {F<sub>i</sub>} is a partition of F to disjoint subsets. So it means we divide the mesh into smaller parts by the faces, and use faces to induce segmentation of the mesh. So one face would belong to unique sub-mesh and each edge would belong to one sub-mesh or two if it’s between two sub-meshes and each vertex might belong to one or multi sub-meshes. The basic elements we may consider will only be faces in the following.</p>
+  
+  <h2>2 Methods</h2>
+  <p>As we’ll only consider face-partitioning, dual graph of the mesh is widely used. Faces are defined as dual vertices, and two dual vertices are adjacent if and only if the two original faces are adjacent, i.e. the common edge of two faces will flip to be the dual edge between two dual vertices.</p>
+  <p>Segmentation methods mainly involve two kinds of thinking to measure meshes, face-level and part-level. The use different kinds of information of objects and induce different kinds of partitions.</p>
+  <p>Face-level  treats meshes as its 2D surface and uses features on faces to partition meshes into patches where each patch holds some common properties, e.g. curvature, normal, etc. And each patch must be topologically equivalent to a disk. 
+  Part-level adopts cognition method to split meshes into meaningful parts to humans. It treats meshes as 3D shape and analysis the shape in semantic parts, e.g. volume data, basic shapes like planes, cylinders, spheres, etc. </p>
+  <p>For each type, there are several standalone approaches of segmentation. Other than the view of the mesh, different kinds of approaches are only different techniques and can generate partitions for any measurement of meshes. </p>
+  <p>Clustering defines some function on the entire mesh and treat each triangle as an initial cluster, and then each time pick two adjacent clusters with some minimal error and merge them together get a new cluster until the amount of clusters is small enough. Fitting uses some primitive shapes like plane, sphere and cylinder to fit the mesh and partition the mesh into these kinds of shapes. </p>
+
+  <h2>3 Hierarchical Face Clustering</h2>
+  <p>Hierarchical Face Clustering (HFC) is a a greedy algorithm to merge faces for best planarity. Each triangle represents an initial cluster. In each step, every two adjacent clusters are evaluated. A least square fitting plane is indicated by setting weighted coordinates of clusters as a point of the plane and weighted normals of clusters is the normal of the plane. Then use L<sup>2</sup> normal to compute the bias error from the merged cluster to the fitting plane. The pair of clusters with minimal error is chosen to be merged together. This procedure can be run to one cluster left and form 2-binary tree recording the hierarchical result of the segmentation </p>
+  <img src="cat0.bmp" width="210"><img src="cat255.bmp" width="200"><img src="cat255back.bmp" width="150">
+  <p>fig1. This is an example for HFC, from left to right: input data, front view of 3 clusters, back view of 3 clusters</p>
+  <p>As HFC is a greedy algorithm and only consider local merging, the initial mistake may lead to a wired global segmentation cause clusters merged ahead wouldn't be separated later discarding recomputing boundary smoothness.</p>
+  <p>Hierarchical Fitting Primitives is an improvement of HFC. It extends fitting shapes from only planes to cylinder and spheres and make HFC a framework of clustering based on primitives fitting. In each iteration of HFC, just change computing the fitting planes to all primitives and use the minimal error between clusters and the primitives as the evaluation. This extension provides better precision for volume meshes. </p>
+  
+  <h2>4 Fuzzy Clustering</h2>
+  <p>This method uses global clustering on the dual graph of a meshes. For each dual edge connecting two dual vertices, i.e. two adjacent faces, the weight of the edge is given by the distance between the two faces. The distance is defined as a linear combination of the geodesic distance between two barycentrics and the dihedral angles. After each edge is defined, the distance between any two dual vertex is defined as the shortest path. </p>
+  
+  <img src="geod.png" width="100">
+  <p>fig2. Define distance between two faces by the geodesic distance</p>
+  <p>The idea of fuzzy clustering is to select some dual vertices to represent the clusters and make other vertices belong to its nearest represent with vertices near the boundary fuzzy. Then recompute the represents of each cluster and loop the procedure until finding stable represents. </p>
+  <p>At last use minimal edge cut to refine the boundaries between clusters.  </p>
+  <p>For initial represents, vertices with longest distance to each other are chosen. The simplest case is to select the ends of the longest path in the dual graph. </p>
+  <img src="long.png">
+  <p>fig3. Represents with longest distance.</p>
+  <p>The shortest path of the dual graph can be computed one time as it won't be changed in the clustering process. However computing shortest path between any two vertices using Floyd's algorithm costs O(n<sup>3</sup>) complexity and for large meshes it would slow down the whole program. </p>
+  <img src="fuzzyhorse.png">
+  <p>fig.4 Segmentation of fuzzy clustering from left to right: input data, 1-iteration, 2-iteration</p>
+  
+  <h2>5 Shape Diameter Function</h2>
+  <p>SDF replaces the radius function in medial axis transform. The core idea of SDF is measure the diameter of each part of the mesh and separate large and small part. </p>
+  <p>SDF is defined as following. For each vertex on the surface, ray cast several lines to its inward normal direction to the other side of the mesh, weight the length of acceptable rays  as the sdf of this vertex. </p>
+  <p>Here using several lines is to overcome singular opposite surface and can fit for pose changes. </p>
+  <img src="arm.png">
+  <p>fig5. Ray cast to the opposite side of mesh</p>
+  <p>Compute the sdf of each face's barycentric and collect all the values. Faces with similar sdf would be viewed as the same part. To separate the parts of the values, the histogram of sdf need to be decomposed.</p>
+  <img src="sdfhorse.png" width="250">
+  <img src="histogram.png" width="300">
+  <p>fig6. SDF distribution of the mesh and SDFs normalizes to [0,1]</p>
+  <p>I adopted the K-means Algorithm to decompose the histogram. Iteratively compute the mean value of each group to separate the histogram into k groups. </p>
+  <ol>
+	<li>Random choose k values in the histogram as mean values </li>
+	<li>For each value in the histogram, assign it to its nearest mean values </li>
+	<li>Recompute mean values of each group </li>
+	<li>If the mean values changed , goto 2</li>
+  </ol>
+  <p>And the decomposition of the histogram indicated the segmentation of the mesh.  </p>
+  <img src="sdfhorsecolor.png">
+  <p>fig7. SDF segementation without boundary refined.</p>
+  <p>If we take half length of SDF at each vertex to its inward normal direction, we can get point cloud near the medial axis. Curve extraction from the point could can lead to the skeleton of the mesh. </p>
+  <img src="skeletonpointcloud.png">
+  <p>fig8. point cloud near medial axis</p>
+  
+  <h2>6 Future Work</h2>
+  <p>I studied and implement some segmentation methods. However I need to construct the entire feeling about segmentation and skeleton extraction. Not many skeleton extraction theories have been studied in this project. So I'd like to think deeper and study further about these topics, rather than only spend too much time on implement. Still, try to find some interesting relationship between segmentation and skeletons. </p>
+  
+  <h2>Reference</h2>
+  <ol>
+	<li>Attene, Marco, et al. "Mesh segmentation-a comparative study." Shape Modeling and Applications, 2006. SMI 2006. IEEE International Conference on. IEEE, 2006.</li>
+	<li>Shamir, Ariel. "A survey on mesh segmentation techniques." Computer graphics forum. Vol. 27. No. 6. Blackwell Publishing Ltd, 2008.</li>
+	<li>Garland, Michael, Andrew Willmott, and Paul S. Heckbert. "Hierarchical face clustering on polygonal surfaces." Proceedings of the 2001 symposium on Interactive 3D graphics. ACM, 2001.</li>
+	<li>Attene, Marco, Bianca Falcidieno, and Michela Spagnuolo. "Hierarchical mesh segmentation based on fitting primitives." The Visual Computer 22.3 (2006): 181-193.</li>
+	<li>Katz, Sagi, and Ayellet Tal. Hierarchical mesh decomposition using fuzzy clustering and cuts. Vol. 22. No. 3. ACM, 2003.</li>
+	<li>Shapira, Lior, Ariel Shamir, and Daniel Cohen-Or. "Consistent mesh partitioning and skeletonisation using the shape diameter function." The Visual Computer 24.4 (2008): 249-259.</li>
+  </ol>
+</body></html>

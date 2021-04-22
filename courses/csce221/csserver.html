@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="Description" content="CSCE-221">
+<meta name="Keywords" content="CSCE 221, Data Structures and Algorithms, Computer Science, Texas A&M University">
+<link rel="icon" href="../../images/Z.png">
+<title>Access to CSE servers</title>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="../../css/bootstrap.css">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+  <div class="container">
+    <a href="./">
+    <h1><center>Fall 2019 CSCE-221 Data Structures and Algorithms</center></h1>
+	<h1><center>Lab Sections 501 - 504</center></h1>
+	</a>
+	<hr>
+    <h2>Access to CSE servers</h2>
+    <hr>
+	<h3>Connect to campus</h3>
+	<p>Most cse resources are protected by the firewall. If you are off-campus, you may have to setup <a href="https://connect.tamu.edu/"><b>TAMU VPN</b></a> and connect to cs interal network via VPN.</p>
+	<hr>
+	<h3>Claim your cse account</h3>
+	<p>If this is your first time to use your cse account, you may need to <a href="https://csnet.cs.tamu.edu/claim/"><b>claim</b></a> it first.</p>
+	<hr>
+	<h3>Access your home directory by File Explorer</h3>
+	<p>Your home directory is stored remotely under Microsoft SMB Protocol.</p>
+	<h4>Windows</h4>
+	<p>Open Windows Explorer and type type <b>\\coe-fs.engr.tamu.edu\Ugrads</b> in the address bar.</p>
+	<p>Login using</p>
+	<ul>
+		<li>User: AUTH\netid</li>
+		<li>Pass: Your netid password
+	</ul>
+	<h4>Linux/Mac OS</h4>
+	<p>In your file manager or Finder, type <b>smb://coe-fs.engr.tamu.edu/Ugrads</b> in the address bar.</p>
+	<p>Login using</p>
+	<ul>
+		<li>User: AUTH\netid</li>
+		<li>Pass: Your netid password
+	</ul>
+	<p>If you're grad student, use <b>\\coe-fs.engr.tamu.edu\Grads</b> instead.</p>
+	<hr>
+	<h3>Shared Linux Systems</h3>
+	<p>There're two <a href="https://wiki.cse.tamu.edu/index.php/Shared_Systems">shared servers</a> in cs department:</p>
+	<ul>
+		<li><b>linux2.cs.tamu.edu</b> for general use.</li>
+		<li><b>compute.cs.tamu.edu</b> for computing use.</li>
+	</ul>
+	<h4>Access your home directory by GUI clients (SFTP)</h4>
+	<p>There're several sftp clients available: <a href="https://filezilla-project.org/">FileZilla</a>, <a href="https://winscp.net/eng/index.php">WinSCP</a>, etc.</p>
+	<p>Connect to <b>linux2.cs.tamu.edu</b> via port 22. Login with the same user/pass above.</p>
+	<h4>Access your home directory by Command-line (SFTP)</h4>
+	<p><kbd>$sftp netid@linux2.cs.tamu.edu</kbd> Use your netid passowrd. The commands of sftp, please read the <a href="linux.html">Linux Guide</a>.</p>
+	<p>On windows, you can use <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">PSFTP</a></p>
+	<h4>Shell on remote servers (SSH)</h4>
+	<p><kbd>$ssh netid@linux2.cs.tamu.edu</kbd> Use your netid passowrd.</p>
+	<p>On windows, you can use <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html"><b>PUTTY</b></a></p>
+	<h4>Known issues</h4>
+	<p>If you got an error message like "No home directory found", do the "Access your home directory by File Explorer" first.</p>
+	
+	<h3>Resources</h3>
+	<p><a href="http://students.cs.tamu.edu/dhan9717/csce206/access.html">http://students.cs.tamu.edu/dhan9717/csce206/access.html</a></p>
+	<p><a href="https://wiki.cse.tamu.edu/index.php">https://wiki.cse.tamu.edu/index.php/Main_Page</a></p>
+	<p><a href="https://wiki.cse.tamu.edu/index.php/Getting_Started_Guide">https://wiki.cse.tamu.edu/index.php/Getting_Started_Guide</a></p>
+	<p><a href="https://wiki.cse.tamu.edu/index.php/Accessing_Your_Files">https://wiki.cse.tamu.edu/index.php/Accessing_Your_Files</a></p>
+	<p><a href="https://wiki.cse.tamu.edu/index.php/Mount_Your_Home_Directory_with_Windows">https://wiki.cse.tamu.edu/index.php/Mount_Your_Home_Directory_with_Windows</a></p>
+	<p><a href="https://wiki.cse.tamu.edu/index.php/Shared_Systems">https://wiki.cse.tamu.edu/index.php/Shared_Systems</a></p>
+	<p><a href="http://bit.ly/linuxhomedoc">Linux Home Directory Setup (Google Doc)</a></p>
+	<button onclick="history.back()">Go Back</button>
+  </div>
+<hr>
+<footer class="text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <p>Copyright © Zhipei Yan. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script src="js/jquery-1.11.3.min.js"></script> 
+<!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="js/bootstrap.js"></script>
+</body>
+</html>
