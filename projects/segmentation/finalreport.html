@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <!-- saved from url=(0047)http://students.cs.tamu.edu/yanzp/segmentation/ -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<html><head><meta http-equiv="Content-Type" content="text/html">
 <title>Report</title>
 <STYLE TYPE="text/css"> 
 BODY { 
@@ -18,10 +18,10 @@ BODY {
   
   <h2>1 Introduction</h2>
   <p>Segmentation is an important topic in computer graphics as it gives a kind of shape abstraction which helps geometric processing and human understanding of 3D shapes. Segmentation can provide fundamental information for geometric modeling, deformation, mesh simplification and skeleton extraction. In the past several years, many methods have been come up to mesh segmentation.</p>
-  <p>For a 2-manifold M(V,E,F), we’ll define a segmentation M’ as a set of sub-meshes of M. M’={M<sub>0</sub>,M<sub>1</sub>,…M<sub>n</sub>}, where Mi=(V<sub>i</sub>,E<sub>i</sub>,F<sub>i</sub>) and {F<sub>i</sub>} is a partition of F to disjoint subsets. So it means we divide the mesh into smaller parts by the faces, and use faces to induce segmentation of the mesh. So one face would belong to unique sub-mesh and each edge would belong to one sub-mesh or two if it’s between two sub-meshes and each vertex might belong to one or multi sub-meshes. The basic elements we may consider will only be faces in the following.</p>
+  <p>For a 2-manifold M(V,E,F), we'll define a segmentation M' as a set of sub-meshes of M. M'={M<sub>0</sub>,M<sub>1</sub>,...,M<sub>n</sub>}, where M<sub>i</sub>=(V<sub>i</sub>,E<sub>i</sub>,F<sub>i</sub>) and {F<sub>i</sub>} is a partition of F to disjoint subsets. So it means we divide the mesh into smaller parts by the faces, and use faces to induce segmentation of the mesh. So one face would belong to unique sub-mesh and each edge would belong to one sub-mesh or two if it's between two sub-meshes and each vertex might belong to one or multi sub-meshes. The basic elements we may consider will only be faces in the following.</p>
   
   <h2>2 Methods</h2>
-  <p>As we’ll only consider face-partitioning, dual graph of the mesh is widely used. Faces are defined as dual vertices, and two dual vertices are adjacent if and only if the two original faces are adjacent, i.e. the common edge of two faces will flip to be the dual edge between two dual vertices.</p>
+  <p>As we'll only consider face-partitioning, dual graph of the mesh is widely used. Faces are defined as dual vertices, and two dual vertices are adjacent if and only if the two original faces are adjacent, i.e. the common edge of two faces will flip to be the dual edge between two dual vertices.</p>
   <p>Segmentation methods mainly involve two kinds of thinking to measure meshes, face-level and part-level. The use different kinds of information of objects and induce different kinds of partitions.</p>
   <p>Face-level  treats meshes as its 2D surface and uses features on faces to partition meshes into patches where each patch holds some common properties, e.g. curvature, normal, etc. And each patch must be topologically equivalent to a disk. 
   Part-level adopts cognition method to split meshes into meaningful parts to humans. It treats meshes as 3D shape and analysis the shape in semantic parts, e.g. volume data, basic shapes like planes, cylinders, spheres, etc. </p>
